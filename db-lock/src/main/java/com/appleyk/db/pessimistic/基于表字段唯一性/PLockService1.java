@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 /**
- * <p></p>
+ * <p>以减库存为例，将当前减库存的方法当成资源，由多线程来竞争</p>
  *
  * @author Appleyk
  * @version V.0.1.1

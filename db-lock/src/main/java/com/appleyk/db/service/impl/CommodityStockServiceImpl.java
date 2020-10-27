@@ -35,4 +35,9 @@ public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper,
         wrapper.eq("commodity_code",commodityCode);
         return stockMapper.selectOne(wrapper);
     }
+
+    @Override
+    public CommodityStock findByCodeForUpdate(String commodityCode) {
+        return stockMapper.findByCode(commodityCode);
+    }
 }

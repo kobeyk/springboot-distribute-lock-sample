@@ -3,6 +3,7 @@ package com.appleyk.db.dao.mapper;
 import com.appleyk.db.dao.entity.CommodityStock;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -15,5 +16,9 @@ import org.apache.ibatis.annotations.Param;
 public interface CommodityStockMapper extends BaseMapper<CommodityStock> {
 
     Integer reduce(@Param("code") String commodityCode);
+
+    @Select("select commodity_code, commodity_name, inventory from t_commodity_stock where " +
+            "commodity_code = #{commodityCode} for update")
+    CommodityStock findByCode(@Param("commodityCode") String commodityCode);
 
 }

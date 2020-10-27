@@ -28,10 +28,10 @@ public class ResourceLockController {
 
 
     // 悲观锁，基于表字段唯一性约束
-    @GetMapping("/pressmistic/lock/fetch1/{commoditycode}")
+    @GetMapping("/pessmistic/lock/fetch1/{commoditycode}")
     public Result pLockfetch1(@PathVariable("commoditycode") String commodityCode) throws Exception{
-        boolean business = service1.commodityReduce1(commodityCode);
-        if(business){
+        boolean bRes = service1.commodityReduce1(commodityCode);
+        if(bRes){
             return Result.ok("获取锁成功！");
         }else{
             return Result.ok("获取锁失败（超时）！");
@@ -39,10 +39,10 @@ public class ResourceLockController {
     }
 
     // 悲观锁，基于表字段唯一性约束
-    @GetMapping("/pressmistic/lock/fetch2/{commoditycode}")
+    @GetMapping("/pessmistic/lock/fetch2/{commoditycode}")
     public Result pLockfetch2(@PathVariable("commoditycode") String commodityCode) throws Exception{
-        boolean business = service1.commodityReduce2(commodityCode);
-        if(business){
+        boolean bRes = service1.commodityReduce2(commodityCode);
+        if(bRes){
             return Result.ok("获取锁成功！");
         }else{
             return Result.ok("获取锁失败（超时）！");
@@ -51,7 +51,7 @@ public class ResourceLockController {
 
     // 悲观锁，基于表字段唯一性约束
     @GetMapping("/test")
-    public Result test() throws Exception{
+    public Result test(){
         return Result.ok("from -- "+port);
     }
 
