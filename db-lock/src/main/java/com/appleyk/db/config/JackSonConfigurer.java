@@ -1,6 +1,6 @@
 package com.appleyk.db.config;
 
-import com.appleyk.common.utils.TJsonUtils;
+import com.appleyk.common.utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -21,7 +21,7 @@ import java.util.List;
  * @date created on 14:01 2020/2/26
  */
 @Configuration
-public class TJackSonConfigurer implements WebMvcConfigurer {
+public class JackSonConfigurer implements WebMvcConfigurer {
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -38,7 +38,7 @@ public class TJackSonConfigurer implements WebMvcConfigurer {
         if (originalConverters.size()>0) {
             converters.removeAll(originalConverters);
         }
-        MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();       ObjectMapper objectMapper = TJsonUtils.MAPPER;
+        MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();       ObjectMapper objectMapper = JsonUtils.MAPPER;
 
         // 将long类型的数据转为String类型
         SimpleModule simpleModule = new SimpleModule();

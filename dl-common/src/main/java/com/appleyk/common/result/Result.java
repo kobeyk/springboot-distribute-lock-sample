@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TResult implements Serializable {
+public class Result implements Serializable {
 
     private static final long serialVersionUID = 2719931935414658118L;
 
@@ -20,14 +20,14 @@ public class TResult implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private  Date timeStamp = new Date();
 
-    public TResult(Integer status, String message) {
+    public Result(Integer status, String message) {
         super();
         this.status = status;
         this.message = message;
         this.data = null;
     }
 
-    public TResult(Integer status, String message, Object data) {
+    public Result(Integer status, String message, Object data) {
         super();
         this.status = status;
         this.message = message;
@@ -40,18 +40,18 @@ public class TResult implements Serializable {
      * 成功后直接掉这个
      * @param data
      */
-    private TResult(Object data){
+    private Result(Object data){
         super();
         this.status = 200;
         this.message = "成功！";
         this.data = data;
     }
 
-    public static TResult ok(Object data){
-        return new TResult(data);
+    public static Result ok(Object data){
+        return new Result(data);
     }
 
-    public TResult() {
+    public Result() {
         super();
         this.status = null;
         this.message = null;

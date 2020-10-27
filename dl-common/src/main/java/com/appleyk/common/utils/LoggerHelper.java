@@ -3,9 +3,9 @@ package com.appleyk.common.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TLoggerHelper {
+public class LoggerHelper {
 
-    private static Logger gxLogger = LoggerFactory.getLogger(TLoggerHelper.class);
+    private static Logger gxLogger = LoggerFactory.getLogger(LoggerHelper.class);
     public static void info(String message){
         gxLogger.info(message);
     }

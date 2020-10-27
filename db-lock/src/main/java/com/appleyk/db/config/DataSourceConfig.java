@@ -30,7 +30,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @MapperScan(value = {"com.appleyk.db.dao.mapper"}, sqlSessionTemplateRef  = "sqlSessionTemplate")
 @Configuration
-public class TDataSourceConfig {
+public class DataSourceConfig {
 
     @Primary
     @Bean(name = "dataSource")

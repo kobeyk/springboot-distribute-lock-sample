@@ -19,7 +19,7 @@ import java.util.Map;
  * @blob https://blog.csdn.net/Appleyk
  * @date created on 14:01 2020/2/26
  */
-public class TJsonUtils {
+public class JsonUtils {
 
     /**定义jackson对象*/
     public static final ObjectMapper MAPPER = new ObjectMapper();
