@@ -13,9 +13,10 @@ import java.sql.SQLException;
 /**
  * <p>还是以减库存为例，基于select * from  .. for update</p>
  *
- * @author yukun24@126.com
- * @version V.0.2.2-refactor
- * @company 苏州中科蓝迪
+ * @author Appleyk
+ * @version V.0.1.1
+ * @blob https://blog.csdn.net/appleyk
+ * @github https://github.com/kobeyk/dubbo-spring-boot-sample
  * @date created on 13:43 2020/10/27
  */
 @Service

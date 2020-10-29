@@ -11,7 +11,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>db-lock</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <description>基于数据库乐观锁和悲观锁，分别来模拟分布式锁的实现</description>
 
     <dependencies>

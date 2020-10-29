@@ -17,6 +17,8 @@ public interface CommodityStockMapper extends BaseMapper<CommodityStock> {
 
     Integer reduce(@Param("code") String commodityCode);
 
+    Integer reduce2(@Param("code") String commodityCode,@Param("version") int version);
+
     @Select("select commodity_code, commodity_name, inventory from t_commodity_stock where " +
             "commodity_code = #{commodityCode} for update")
     CommodityStock findByCode(@Param("commodityCode") String commodityCode);

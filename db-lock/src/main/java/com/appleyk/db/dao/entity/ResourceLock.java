@@ -26,7 +26,7 @@ public class ResourceLock implements Serializable {
     /**
      * 资源名称
      */
-    private String resourcName;
+    private String resourceName;
 
     /**
      * 持有该资源的线程名称
@@ -52,12 +52,16 @@ public class ResourceLock implements Serializable {
         this.id = id;
     }
 
-    public String getResourcName() {
-        return resourcName;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setResourcName(String resourcName) {
-        this.resourcName = resourcName;
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
     public String getThreadName() {
@@ -88,7 +92,7 @@ public class ResourceLock implements Serializable {
     public String toString() {
         return "TResourceLock{" +
         "id=" + id +
-        ", resourcName=" + resourcName +
+        ", resourcName=" + resourceName +
         ", threadName=" + threadName +
         ", serverAddress=" + serverAddress +
         ", createTime=" + createTime +

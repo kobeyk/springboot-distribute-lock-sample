@@ -30,6 +30,13 @@ public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer reduce(String commodityCode,int version) {
+        return stockMapper.reduce2(commodityCode,version);
+    }
+
+
+    @Override
     public CommodityStock findByCode(String commodityCode) {
         QueryWrapper<CommodityStock> wrapper = new QueryWrapper<>();
         wrapper.eq("commodity_code",commodityCode);

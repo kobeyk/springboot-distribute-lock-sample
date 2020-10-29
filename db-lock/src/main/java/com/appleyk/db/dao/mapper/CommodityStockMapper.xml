@@ -23,4 +23,9 @@
          commodity_code = #{code}
     </update>
 
+    <update id="reduce2">
+         update t_commodity_stock set inventory = inventory -1,version = version+1 where
+         commodity_code = #{code} and version = #{version}
+    </update>
+
 </mapper>

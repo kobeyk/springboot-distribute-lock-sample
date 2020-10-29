@@ -15,6 +15,8 @@ public interface CommodityStockService extends IService<CommodityStock> {
 
     Integer reduce(String commodityCode);
 
+    Integer reduce(String commodityCode,int version);
+
     CommodityStock findByCode(String commodityCode);
 
     CommodityStock findByCodeForUpdate(String commodityCode);

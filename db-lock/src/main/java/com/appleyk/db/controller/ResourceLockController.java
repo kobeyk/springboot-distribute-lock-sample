@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- *  前端控制器 -- 基于悲观锁进行
+ *  前端控制器 -- 通过抢占方法（资源）的方式·悲观锁，实现商品的减库存操作
  * </p>
  *
  * @author Appleyk
@@ -27,34 +27,15 @@ public class ResourceLockController {
     private Integer port;
 
 
-    // 悲观锁，基于表字段唯一性约束
-    @GetMapping("/pessmistic/lock/fetch1/{commoditycode}")
-    public Result pLockfetch1(@PathVariable("commoditycode") String commodityCode) throws Exception{
-        boolean bRes = service1.commodityReduce1(commodityCode);
+    // 悲观锁，基于表字段唯一性约束，线程之间通过insert的方式抢占资源
+    @GetMapping("/pessimistic/lock/reduce/{commodityCode}")
+    public Result pLockReduceStock(@PathVariable("commodityCode") String commodityCode) throws Exception{
+        boolean bRes = service1.commodityReduce(commodityCode);
         if(bRes){
-            return Result.ok("获取锁成功！");
+            return Result.ok("减库存成功！");
         }else{
-            return Result.ok("获取锁失败（超时）！");
+            return Result.ok("商品已售罄（也有可能是用户竞争太激烈，部分用户抢不到商品，系统处理了）！");
         }
     }
-
-    // 悲观锁，基于表字段唯一性约束
-    @GetMapping("/pessmistic/lock/fetch2/{commoditycode}")
-    public Result pLockfetch2(@PathVariable("commoditycode") String commodityCode) throws Exception{
-        boolean bRes = service1.commodityReduce2(commodityCode);
-        if(bRes){
-            return Result.ok("获取锁成功！");
-        }else{
-            return Result.ok("获取锁失败（超时）！");
-        }
-    }
-
-    // 悲观锁，基于表字段唯一性约束
-    @GetMapping("/test")
-    public Result test(){
-        return Result.ok("from -- "+port);
-    }
-
-
 }
 

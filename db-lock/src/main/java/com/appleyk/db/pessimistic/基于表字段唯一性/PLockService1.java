@@ -1,6 +1,5 @@
 package com.appleyk.db.pessimistic.基于表字段唯一性;
 
-import com.appleyk.common.excep.MybatisPlusException;
 import com.appleyk.db.dao.entity.CommodityStock;
 import com.appleyk.db.dao.entity.ResourceLock;
 import com.appleyk.db.service.CommodityStockService;
@@ -38,17 +37,17 @@ public class PLockService1 {
      * 商品减库存（带锁，这种情况下，不会出现超卖现象，就是效率太低）
      */
     @Transactional(rollbackFor = {SQLException.class,Exception.class})
-    public boolean commodityReduce1(String commodityCode) throws Exception {
+    public boolean commodityReduce(String commodityCode) throws Exception {
 
         ResourceLock lock = new ResourceLock();
-        lock.setResourcName("PLockService1.business");
+        lock.setResourceName("PLockService1.commodityReduce");
         lock.setThreadName(Thread.currentThread().getName());
         lock.setServerAddress("localhost:"+port);
         lock.setCreateTime(LocalDateTime.now());
 
         // 首先要插入
         boolean bSave  =false;
-        // 如果插入失败，意味着获取资源锁失败，那就一直阻塞去插入(获取锁，重复次数10)
+        // 如果插入失败，意味着获取资源锁失败，那就一直阻塞去插入(获取锁，重复次数5)
         int i = 0;
         while(!bSave){
             try{
@@ -60,8 +59,9 @@ public class PLockService1 {
             }
             i++;
             Thread.sleep(10);
-            if(i == 3){
-                throw new MybatisPlusException("获取锁的重试次数已到，任务终止！");
+            if(i == 5){
+                System.out.println("获取锁的重试次数已到，任务终止！");
+                return false;
             }
         }
         System.out.println("获取锁成功！");
@@ -70,29 +70,13 @@ public class PLockService1 {
         CommodityStock commodityStock = stockService.findByCode(commodityCode);
         if(commodityStock.getInventory() == 0){
             System.out.println("商品不够了，需要加库存！");
-            return lockService.removeById(lock.getId());
+            // 一定不要忘了在这里"释放"资源，就是删除一条记录
+            lockService.removeById(lock.getId());
+            return false;
         }
         stockService.reduce(commodityCode);
         // 完成后，删除记录
         return lockService.removeById(lock.getId());
-
-    }
-
-    /***
-     * 商品减库存 (不带任何锁，毫无疑问，比如会出现超卖现象)
-     */
-    @Transactional(rollbackFor = {SQLException.class,Exception.class})
-    public boolean commodityReduce2(String commodityCode) throws Exception {
-
-        CommodityStock commodityStock = stockService.findByCode(commodityCode);
-        if(commodityStock.getInventory() == 0){
-            System.out.println("商品不够了，需要加库存！");
-            throw new MybatisPlusException("商品不够了，需要加库存！");
-        }
-        stockService.reduce(commodityCode);
-
-        return true;
-
     }
 
 }

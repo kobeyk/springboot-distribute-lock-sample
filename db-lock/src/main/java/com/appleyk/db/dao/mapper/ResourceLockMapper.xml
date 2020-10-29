@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.appleyk.db.dao.entity.ResourceLock">
         <id column="id" property="id" />
-        <result column="resourc_name" property="resourcName" />
+        <result column="resource_name" property="resourceName" />
         <result column="thread_name" property="threadName" />
         <result column="server_address" property="serverAddress" />
         <result column="create_time" property="createTime" />
@@ -13,7 +13,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, resourc_name, thread_name, server_address, create_time
+        id, resource_name, thread_name, server_address, create_time
     </sql>
 
 </mapper>
