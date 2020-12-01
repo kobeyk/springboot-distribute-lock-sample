@@ -14,5 +14,23 @@
     <packaging>jar</packaging>
     <description>基redis，实现分布式锁</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.appleyk</groupId>
+            <artifactId>dl-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.13.4</version>
+        </dependency>
+    </dependencies>
 
 </project>
