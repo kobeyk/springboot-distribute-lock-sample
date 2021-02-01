@@ -50,7 +50,7 @@ public class OLockService {
             return false;
         }
         // 2.再把版本号保存下来
-        int version = commodityStock.getVersion();
+        long version = commodityStock.getVersion();
 
         // 3.执行减库存(看运气，谁能减成功，证明他操作的时候，没有其他线程修改库存)
         //   如果执行失败了，可以提示，系统繁忙等（要不就循环减库存，不建议这样搞）

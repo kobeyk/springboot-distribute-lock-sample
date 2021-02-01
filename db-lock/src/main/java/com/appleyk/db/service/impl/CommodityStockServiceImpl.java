@@ -31,7 +31,7 @@ public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper,
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer reduce(String commodityCode,int version) {
+    public Integer reduce(String commodityCode,long version) {
         return stockMapper.reduce2(commodityCode,version);
     }
 

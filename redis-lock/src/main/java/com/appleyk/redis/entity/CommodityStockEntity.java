@@ -1,10 +1,9 @@
-package com.appleyk.db.dao.entity;
+package com.appleyk.redis.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,12 +15,13 @@ import java.time.LocalDateTime;
  * @author Appleyk
  * @since 2020-10-21
  */
-@TableName("t_commodity_stock")
-public class CommodityStock implements Serializable {
+@Entity
+@Table(name = "t_commodity_stock")
+public class CommodityStockEntity implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @TableId(value = "id", type = IdType.ID_WORKER)
+    @Id
     private Long id;
 
     /**
@@ -39,11 +39,6 @@ public class CommodityStock implements Serializable {
      */
     private Integer inventory;
 
-    /**
-     * 乐观锁，版本标记（当然也可以取更新时间的时间戳）
-     */
-    @Version
-    private Long version;
 
     /**
      * 创建时间
@@ -92,14 +87,6 @@ public class CommodityStock implements Serializable {
         return serialVersionUID;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -119,13 +106,12 @@ public class CommodityStock implements Serializable {
     @Override
     public String toString() {
         return "TCommodityStock{" +
-                "id=" + id +
-                ", commodityCode=" + commodityCode +
-                ", commodityName=" + commodityName +
-                ", inventory=" + inventory +
-                ", version=" + version +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                "}";
+        "id=" + id +
+        ", commodityCode=" + commodityCode +
+        ", commodityName=" + commodityName +
+        ", inventory=" + inventory +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
+        "}";
     }
 }
