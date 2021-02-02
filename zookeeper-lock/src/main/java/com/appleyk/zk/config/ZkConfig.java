@@ -67,7 +67,8 @@ public class ZkConfig {
                 CuratorFrameworkFactory.builder()
                         .connectString(connectString)
                         .sessionTimeoutMs(timeout)
-                        .connectionTimeoutMs(15 * 1000)
+                        .connectionTimeoutMs(60 * 1000)
+                        // 设置命名空间
                         .namespace("curator")
                         .retryPolicy(retryPolicy).build();
         client.start();

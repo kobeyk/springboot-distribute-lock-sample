@@ -35,6 +35,7 @@
         <velocity.version>1.7</velocity.version>
         <redisson.version>3.13.6</redisson.version>
         <data.jpa.version>2.3.3.RELEASE</data.jpa.version>
+        <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
     </properties>
 
     <!--统一管理子项目依赖的组件（主要是在父工程约定version，如果子项目想要更改version，显示更新即可）-->
@@ -153,7 +154,6 @@
                 <version>${tk.mybatis.version}</version>
             </dependency>
 
-
             <!-- zookeeper 客户端 -->
             <dependency>
                 <groupId>org.apache.curator</groupId>
@@ -161,10 +161,27 @@
                 <version>${curator.version}</version>
             </dependency>
 
+            <!--zookeeper策略，包含了分布式锁的实现-->
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+            <!--The Best APIs are Build with Swagger Tools-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.swagger2.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+            <!--可视化的UI前端页面来展示接口的应用-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.swagger2.version}</version>
             </dependency>
 
         </dependencies>
