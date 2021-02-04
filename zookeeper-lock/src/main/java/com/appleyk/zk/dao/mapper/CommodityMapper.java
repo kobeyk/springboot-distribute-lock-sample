@@ -2,6 +2,7 @@ package com.appleyk.zk.dao.mapper;
 
 import com.appleyk.zk.dao.entity.CommodityEntity;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,4 +21,6 @@ public interface CommodityMapper extends Mapper<CommodityEntity> {
     @Update("update t_commodity_stock set inventory = inventory - 1 where commodity_code = #{cCode}")
     int reduce(@Param("cCode") String cCode);
 
+    @Select("select * from t_commodity_stock where commodity_code = #{cCode}")
+    CommodityEntity findByCode(@Param("cCode") String cCode);
 }

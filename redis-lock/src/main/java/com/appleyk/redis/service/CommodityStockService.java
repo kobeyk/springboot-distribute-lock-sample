@@ -10,25 +10,18 @@ package com.appleyk.redis.service;
  */
 public interface CommodityStockService  {
 
-    /**
-     * 裸奔，直接减库存
-     * @param commodityCode 商品编码
-     * @return update影响的行数
-     */
-    Integer reduce(String commodityCode);
+    // 一切正常来
+    Integer reduceLock0(String commodityCode);
 
-    /**
-     * 基于redisson框架的减库存操作，很简单，上来就是干，没有带什么version一说
-     * @param commodityCode 商品编码
-     * @return update影响的行数
-     */
-    Integer reduceLock(String commodityCode);
+    // 方法上不加@Transaction
+    Integer reduceLock1(String commodityCode);
 
-    /**
-     * 基于jpa的save方法，测试一下是否它也是线程安全的？
-     * @param commodityCode 商品编码
-     * @return update影响的行数
-     */
-    Integer reduce2(String commodityCode);
+    // 改成事务提交成功后再释放锁
+    Integer reduceLock2(String commodityCode);
 
+    // 手动管理事务的提交和回滚
+    Integer reduceLock3(String commodityCode);
+
+    // 不加锁，将锁移至上层（如Controller），在上层进行粗粒度的加锁
+    Integer reduceLock4(String commodityCode);
 }

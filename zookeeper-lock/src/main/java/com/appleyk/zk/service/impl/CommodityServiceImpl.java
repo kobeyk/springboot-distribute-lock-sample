@@ -1,5 +1,7 @@
 package com.appleyk.zk.service.impl;
 
+import com.appleyk.common.excep.MybatisEntityNotFoundException;
+import com.appleyk.zk.dao.entity.CommodityEntity;
 import com.appleyk.zk.dao.mapper.CommodityMapper;
 import com.appleyk.zk.service.CommodityService;
 import org.apache.curator.framework.CuratorFramework;
@@ -35,24 +37,57 @@ public class CommodityServiceImpl implements CommodityService {
 
     private String lockPath = "/lock/test/";
 
+//    @Transactional(rollbackFor = {Exception.class})
+//    @Override
+//    public Integer reduce(String commodityCode) throws Exception{
+//        Example example = new Example(CommodityEntity.class);
+//        example.and().andEqualTo("commodityCode",commodityCode);
+//        List<CommodityEntity> entities = commodityMapper.selectByExample(example);
+//        if (entities!=null && entities.size() == 1){
+//            CommodityEntity commodityEntity = entities.get(0);
+//            if (commodityEntity.getInventory() == 0){
+//                logger.warn("商品不够了，需要加库存！");
+//                return 0;
+//            }
+//            return commodityMapper.reduce(commodityCode);
+//        }
+//        throw new MybatisEntityNotFoundException("所购的商品不存在！");
+//    }
+
     @Transactional(rollbackFor = {Exception.class})
     @Override
-    public Integer reduce(String commodityCode) {
-        return commodityMapper.reduce(commodityCode);
+    public Integer reduce(String commodityCode) throws Exception{
+        CommodityEntity entity = commodityMapper.findByCode(commodityCode);
+        if (entity != null){
+            if (entity.getInventory() == 0){
+                logger.warn("商品不够了，需要加库存！");
+                return 0;
+            }
+            return commodityMapper.reduce(commodityCode);
+        }
+        throw new MybatisEntityNotFoundException("所购的商品不存在！");
     }
 
     @Transactional(rollbackFor = {Exception.class})
     @Override
-    public Integer reduceLock(String commodityCode) {
+    public Integer reduceLock(String commodityCode) throws Exception{
         String lockName = lockPath + UUID.randomUUID().toString();
-        logger.info("==={} 线程访问开始===lockName:{}",Thread.currentThread().getName(),lockName);
+//        logger.info("==={} 线程访问开始===lockName:{}",Thread.currentThread().getName(),lockName);
         // recipes不可重入的互斥锁
         InterProcessSemaphoreMutex lock = new InterProcessSemaphoreMutex (curatorFramework, lockName);
         try{
             //获取锁资源
             boolean flag = lock.acquire(10, TimeUnit.SECONDS);
             if(flag){
-                logger.info("线程:{}，获取到了锁",Thread.currentThread().getName());
+//                logger.info("线程:{}，获取到了锁",Thread.currentThread().getName());
+                CommodityEntity entity = commodityMapper.findByCode(commodityCode);
+                if(entity == null){
+                    throw new MybatisEntityNotFoundException("所购的商品不存在！");
+                }
+                if(entity.getInventory() == 0){
+                    logger.warn("商品不够了，需要加库存！");
+                    return 0;
+                }
                 return commodityMapper.reduce(commodityCode);
             }
         }catch (Exception e){
@@ -60,7 +95,7 @@ public class CommodityServiceImpl implements CommodityService {
         }finally {
             try {
                 lock.release();
-                logger.info("===lockName:{}==={}释放了锁",lockName,Thread.currentThread().getName());
+//                logger.info("===lockName:{}==={}释放了锁",lockName,Thread.currentThread().getName());
             } catch (Exception e) {
                 logger.info("错误信息：{}",e.getMessage());
             }

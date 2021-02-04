@@ -40,10 +40,9 @@ public class RedisDistributeLock {
         String locker =commodityCode+"_"+COMMODITY_REDUCE_LOCK_IDENTIFIER;
         RLock lock = lockSet.getLock(locker);
         try {
-            if (!lock.tryLock(10, TimeUnit.SECONDS)) {
+            if (!lock.tryLock(30, TimeUnit.SECONDS)) {
                 throw new LockTimeoutException("获取商品减库存操作的锁超时!");
             }
-//            System.out.println("线程："+Thread.currentThread().getName()+"获取锁成功！");
         } catch (InterruptedException e) {
             throw new RuntimeException("商品【"+ commodityCode+"】减少库存操作失败！");
         }

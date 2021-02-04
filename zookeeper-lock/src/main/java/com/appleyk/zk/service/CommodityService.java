@@ -16,13 +16,13 @@ public interface CommodityService {
      * @param commodityCode 商品编码
      * @return update影响的行数
      */
-    Integer reduce(String commodityCode);
+    Integer reduce(String commodityCode) throws Exception;
 
     /**
      * 基于zk框架的减库存操作，很简单，上来就是干，没有带什么version一说
      * @param commodityCode 商品编码
      * @return update影响的行数
      */
-    Integer reduceLock(String commodityCode);
+    Integer reduceLock(String commodityCode) throws Exception;
 
 }

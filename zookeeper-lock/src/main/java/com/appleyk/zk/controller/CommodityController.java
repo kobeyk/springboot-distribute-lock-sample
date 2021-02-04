@@ -46,6 +46,7 @@ public class CommodityController {
             logger.info("商品{}已售罄",commodityCode);
             return Result.ok("商品已售罄！");
         }
+//        return Result.ok("成功");
     }
 
     @ApiOperation("加zk分布式锁，实现高并发减库存")
