@@ -1,10 +1,12 @@
 package com.appleyk.redis.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -27,11 +29,13 @@ public class CommodityStockEntity implements Serializable {
     /**
      * 商品编码
      */
+    @Column(name = "commodity_code")
     private String commodityCode;
 
     /**
      * 商品名称
      */
+    @Column(name = "commodity_name")
     private String commodityName;
 
     /**
@@ -43,12 +47,14 @@ public class CommodityStockEntity implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @Column(name = "create_time")
+    private Timestamp createTime;
 
     /**
      * 修改数据
      */
-    private LocalDateTime updateTime;
+    @Column(name = "update_time")
+    private Timestamp updateTime;
 
 
     public Long getId() {
@@ -87,19 +93,19 @@ public class CommodityStockEntity implements Serializable {
         return serialVersionUID;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

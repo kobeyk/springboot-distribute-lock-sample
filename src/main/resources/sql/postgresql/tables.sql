@@ -19,27 +19,10 @@ COMMENT ON COLUMN "public"."t_commodity_stock"."version" IS '乐观锁，版本�
 COMMENT ON COLUMN "public"."t_commodity_stock"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."t_commodity_stock"."update_time" IS '修改数据';
 
--- ----------------------------
--- Table structure for t_resource_lock
--- ----------------------------
-DROP TABLE IF EXISTS "public"."t_resource_lock";
-CREATE TABLE "public"."t_resource_lock" (
-  "id" int8 NOT NULL,
-  "resource_name" varchar(255) COLLATE "pg_catalog"."default",
-  "thread_name" varchar(255) COLLATE "pg_catalog"."default",
-  "server_address" varchar(255) COLLATE "pg_catalog"."default",
-  "create_time" timestamp(6) NOT NULL
-)
-;
-COMMENT ON COLUMN "public"."t_resource_lock"."resource_name" IS '资源名称';
-COMMENT ON COLUMN "public"."t_resource_lock"."thread_name" IS '持有该资源的线程名称';
-COMMENT ON COLUMN "public"."t_resource_lock"."server_address" IS '持有该资源的线程所在的服务地址';
-COMMENT ON COLUMN "public"."t_resource_lock"."create_time" IS '创建资源锁的时间';
-
 
 -- Records of t_commodity_stock
 -- ----------------------------
-INSERT INTO "public"."t_commodity_stock" VALUES (1, 'CN100124512', 'Mac笔记本', 1000, 0, '2020-10-26 16:36:31', '2020-10-28 15:27:08.434');
+INSERT INTO "public"."t_commodity_stock" VALUES (1, 'CN100124512', 'Mac笔记本', 500, 0, '2020-10-26 16:36:31', '2020-10-28 15:27:08.434');
 
 -- ----------------------------
 -- Triggers structure for table t_commodity_stock
@@ -54,9 +37,26 @@ EXECUTE PROCEDURE "public"."mt_timestamp"();
 -- ----------------------------
 ALTER TABLE "public"."t_commodity_stock" ADD CONSTRAINT "tb_commodity_stock_pkey" PRIMARY KEY ("id");
 
+DROP TABLE IF EXISTS "public"."t_resource_lock";
+CREATE TABLE "public"."t_resource_lock" (
+    "id" int8 NOT NULL,
+    "resource_name" varchar(255) COLLATE "pg_catalog"."default",
+    "thread_name" varchar(255) COLLATE "pg_catalog"."default",
+    "server_address" varchar(255) COLLATE "pg_catalog"."default",
+    "create_time" timestamp(6) NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."t_resource_lock"."resource_name" IS '资源名称';
+COMMENT ON COLUMN "public"."t_resource_lock"."thread_name" IS '持有该资源的线程名称';
+COMMENT ON COLUMN "public"."t_resource_lock"."server_address" IS '持有该资源的线程所在的服务地址';
+COMMENT ON COLUMN "public"."t_resource_lock"."create_time" IS '创建资源锁的时间';
+
+-- ----------------------------
+-- Uniques structure for table t_resource_lock
+-- ----------------------------
+ALTER TABLE "public"."t_resource_lock" ADD CONSTRAINT "rName" UNIQUE ("resource_name");
+
 -- ----------------------------
 -- Primary Key structure for table t_resource_lock
 -- ----------------------------
-ALTER TABLE "public"."t_resource_lock" ADD CONSTRAINT "tb_resource_lock_pkey" PRIMARY KEY ("id");
-
-
+ALTER TABLE "public"."t_resource_lock" ADD CONSTRAINT "t_resource_lock_pkey" PRIMARY KEY ("id");

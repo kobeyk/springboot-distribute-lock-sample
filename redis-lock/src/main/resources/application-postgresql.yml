@@ -19,3 +19,12 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
     type: com.zaxxer.hikari.HikariDataSource
+logging:
+  level:
+    org:
+      hibernate:
+        engine:
+          jdbc:
+            env:
+              internal:
+                LobCreatorBuilderImpl: ERROR

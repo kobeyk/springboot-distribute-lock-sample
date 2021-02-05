@@ -18,6 +18,6 @@ CREATE TABLE `t_commodity_stock`  (
 -- ----------------------------
 -- Records of t_commodity_stock
 -- ----------------------------
-INSERT INTO `t_commodity_stock` VALUES (1, 'CN100124512', 'Mac笔记本', '1000', '2021-02-01 16:50:00', '2021-02-01 16:50:04');
+INSERT INTO `t_commodity_stock` VALUES (1, 'CN100124512', 'Mac笔记本', '500', '2021-02-01 16:50:00', '2021-02-01 16:50:04');
 
 SET FOREIGN_KEY_CHECKS = 1;

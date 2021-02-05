@@ -38,13 +38,11 @@ public class PLockService1 {
      */
     @Transactional(rollbackFor = {SQLException.class,Exception.class})
     public boolean commodityReduce(String commodityCode) throws Exception {
-
         ResourceLock lock = new ResourceLock();
         lock.setResourceName("PLockService1.commodityReduce");
         lock.setThreadName(Thread.currentThread().getName());
         lock.setServerAddress("localhost:"+port);
         lock.setCreateTime(LocalDateTime.now());
-
         // 首先要插入
         boolean bSave  =false;
         // 如果插入失败，意味着获取资源锁失败，那就一直阻塞去插入(获取锁，重复次数5)
@@ -58,7 +56,7 @@ public class PLockService1 {
                         e.getMessage());
             }
             i++;
-            Thread.sleep(10);
+            Thread.sleep(1);
             if(i == 5){
                 System.out.println("获取锁的重试次数已到，任务终止！");
                 return false;
@@ -66,7 +64,6 @@ public class PLockService1 {
         }
         System.out.println("获取锁成功！");
         // 如果跳出循环就是true，说明获取锁成功，开始执行业务
-        // 先查
         CommodityStock commodityStock = stockService.findByCode(commodityCode);
         if(commodityStock.getInventory() == 0){
             System.out.println("商品不够了，需要加库存！");
@@ -75,8 +72,8 @@ public class PLockService1 {
             return false;
         }
         stockService.reduce(commodityCode);
+        return true;
         // 完成后，删除记录
-        return lockService.removeById(lock.getId());
+//        return lockService.removeById(lock.getId());
     }
-
 }

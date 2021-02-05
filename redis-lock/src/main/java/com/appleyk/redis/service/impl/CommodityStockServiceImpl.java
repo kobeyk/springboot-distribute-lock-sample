@@ -44,7 +44,7 @@ public class CommodityStockServiceImpl implements CommodityStockService {
     private JpaTransactionManager transactionManager;
 
     /**
-     * 第一种解决方案：service方法上不加事务注解，在具体的reduce（repo）方法上加事务注解
+     * 正常使用分布式锁，即事务注解和分布式锁正常使用（这种咋一看不会出现问题，其实测试会发现，很有问题）
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -114,7 +114,7 @@ public class CommodityStockServiceImpl implements CommodityStockService {
                 logger.warn("商品不够了，需要加库存！");
                 return 0;
             }
-            return stockRepo.reduce2(commodityCode);
+            return stockRepo.reduce(commodityCode);
 
         }finally {
             //事务完成后释放锁
